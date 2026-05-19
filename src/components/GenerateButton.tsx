@@ -11,7 +11,7 @@ import {
 const GenerateButton = () => {
   const { method, setPalette } = useStore();
 
-  const generate = (method) => {
+  const generate = (method: string) => {
     if (method === "analogous") {
       const palette = generateAnalogous();
       setPalette(palette);

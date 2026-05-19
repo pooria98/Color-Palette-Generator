@@ -18,7 +18,7 @@ export const normalizeSL = (value: number) => {
   }
 };
 
-export const hexToHsl = (hex) => {
+export const hexToHsl = (hex: string) => {
   let cleanHex = hex.replace(/^#/, "");
   if (cleanHex.length === 3) {
     cleanHex = cleanHex
@@ -60,13 +60,7 @@ export const hexToHsl = (hex) => {
   return { h, s, l };
 };
 
-export const hslToHex = (h, s, l) => {
-  if (typeof h === "object") {
-    s = h.s;
-    l = h.l;
-    h = h.h;
-  }
-
+export const hslToHex = (h: number, s: number, l: number) => {
   s /= 100;
   l /= 100;
 
@@ -107,7 +101,7 @@ export const hslToHex = (h, s, l) => {
   const g = Math.round((g1 + m) * 255);
   const b = Math.round((b1 + m) * 255);
 
-  const toHex = (n) => {
+  const toHex = (n: number) => {
     const hex = n.toString(16);
     return hex.length === 1 ? "0" + hex : hex;
   };

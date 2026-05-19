@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface StoreState {
+export interface StoreState {
   method:
     | "analogous"
     | "complementary"

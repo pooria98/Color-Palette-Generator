@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import ChevronDown from "../icons/ChevronDown";
-import useStore from "../store";
+import useStore, { type StoreState } from "../store";
 
 gsap.registerPlugin(useGSAP);
 
@@ -20,10 +20,10 @@ export default function Dropdown() {
   const { method, setMethod } = useStore();
 
   const containerRef = useRef(null);
-  const buttonRef = useRef(null);
-  const menuRef = useRef(null);
-  const itemRefs = useRef([]);
-  const tlRef = useRef(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<HTMLButtonElement[]>([]);
+  const tlRef = useRef<gsap.core.Timeline | null>(null);
 
   useGSAP(
     () => {
@@ -63,10 +63,10 @@ export default function Dropdown() {
   }, [isOpen]);
 
   useEffect(() => {
-    const onPointerDown = (e) => {
+    const onPointerDown = (e: globalThis.PointerEvent) => {
       if (!isOpen) return;
 
-      const target = e.target;
+      const target = e.target as Node;
       const menu = menuRef.current;
       const button = buttonRef.current;
 
@@ -80,7 +80,7 @@ export default function Dropdown() {
       }
     };
 
-    const onKeyDown = (e) => {
+    const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setIsOpen(false);
     };
 
@@ -93,7 +93,7 @@ export default function Dropdown() {
     };
   }, [isOpen]);
 
-  const handleSelect = (value) => {
+  const handleSelect = (value: StoreState["method"]) => {
     setMethod(value);
     setIsOpen(false);
   };
@@ -143,7 +143,7 @@ export default function Dropdown() {
                 if (el) itemRefs.current[index] = el;
               }}
               role="menuitem"
-              onClick={() => handleSelect(option)}
+              onClick={() => handleSelect(option as StoreState["method"])}
               style={{
                 display: "block",
                 width: "100%",

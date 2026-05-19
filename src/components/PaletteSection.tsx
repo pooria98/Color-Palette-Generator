@@ -3,9 +3,9 @@ import useStore from "../store";
 
 const PaletteSection = () => {
   const { palette } = useStore();
-  const [copiedColor, setCopiedColor] = useState(null);
+  const [copiedColor, setCopiedColor] = useState<string | null>(null);
 
-  const copyToClipboard = async (color) => {
+  const copyToClipboard = async (color: string) => {
     try {
       await navigator.clipboard.writeText(color);
       setCopiedColor(color);
